@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Solicita tu Motocarro - Traslados a Domicilio | Rápido y Seguro</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(145deg, #c62828 0%, #b71c1c 100%);
+            /* Fondo rojo intenso como base */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+       
+        .register-container {
+            max-width: 1000px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 36px;
+            overflow: hidden;
+            box-shadow: 0 30px 40px rgba(0, 0, 0, 0.3), 0 8px 15px rgba(0, 0, 0, 0.15);
+            transition: all 0.2s ease;
+        }
+
+    
+        .form-header {
+            background: #fff5f0;
+            padding: 28px 32px 20px 32px;
+            border-bottom: 3px solid #e53935;
+            text-align: center;
+        }
+
+        .form-header h1 {
+            font-size: 1.9rem;
+            color: #c62828;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            font-weight: 800;
+            letter-spacing: -0.3px;
+        }
+
+        .form-header h1 i {
+            font-size: 2rem;
+        }
+
+        .form-header p {
+            color: #b5382a;
+            margin-top: 8px;
+            font-weight: 500;
+            font-size: 1rem;
+        }
+
+    
+        .brand-image {
+            background: #ffece5;
+            text-align: center;
+            padding: 16px 20px 10px 20px;
+        }
+
+        .brand-image img {
+            max-width: 130px;
+            height: auto;
+            border-radius: 20px;
+            filter: drop-shadow(0 6px 12px rgba(0,0,0,0.15));
+        }
+
+
+        .form-body {
+            padding: 28px 32px 38px 32px;
+            background: white;
+        }
+
+        .two-columns {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 24px;
+        }
+
+        .column {
+            flex: 1;
+            min-width: 220px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-group label {
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+            color: #d32f2f;
+        }
+
+        .input-group input, 
+        .input-group select,
+        .input-group textarea {
+            padding: 12px 14px;
+            border: 1.5px solid #ffcdd2;
+            border-radius: 20px;
+            font-size: 0.95rem;
+            transition: 0.2s;
+            background: #fffdfb;
+            outline: none;
+        }
+
+        .input-group input:focus,
+        .input-group select:focus,
+        .input-group textarea:focus {
+            border-color: #ef5350;
+            box-shadow: 0 0 0 3px rgba(239, 83, 80, 0.2);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 70px;
+        }
+
+        /* para tipo de carga */
+        .row-doble {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .row-doble .input-group {
+            flex: 1;
+        }
+
+        hr {
+            margin: 20px 0 24px;
+            border: none;
+            height: 2px;
+            background: linear-gradient(to right, #ffccbc, #e53935, #ffccbc);
+        }
+
+        .btn-submit {
+            width: 100%;
+            background: #d32f2f;
+            border: none;
+            padding: 15px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: white;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: all 0.25s;
+            box-shadow: 0 5px 0 #8b1a1a;
+            margin-top: 10px;
+            letter-spacing: 1px;
+        }
+
+        .btn-submit:hover {
+            background: #ef5350;
+            transform: translateY(-2px);
+            box-shadow: 0 7px 0 #8b1a1a;
+        }
+
+        .btn-submit:active {
+            transform: translateY(3px);
+            box-shadow: 0 2px 0 #8b1a1a;
+        }
+
+        .footer-note {
+            text-align: center;
+            font-size: 0.75rem;
+            color: #c0392b;
+            margin-top: 24px;
+            border-top: 1px solid #ffcdd2;
+            padding-top: 18px;
+        }
+
+        /* Versión móvil */
+        @media (max-width: 680px) {
+            .form-header h1 {
+                font-size: 1.4rem;
+            }
+            .form-body {
+                padding: 20px;
+            }
+            .two-columns {
+                gap: 12px;
+            }
+        }
+
+    
+        .toast-message {
+            visibility: hidden;
+            min-width: 280px;
+            background-color: #c62828;
+            color: white;
+            text-align: center;
+            border-radius: 40px;
+            padding: 12px;
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            z-index: 1000;
+            transition: visibility 0s, opacity 0.3s;
+            opacity: 0;
+            font-size: 0.9rem;
+        }
+        .toast-message.show {
+            visibility: visible;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+
+<div class="register-container">
+    <div class="form-header">
+        <h1>
+            <span>🛺</span> Solicita tu Motocarro <span>🚚💨</span>
+        </h1>
+        <p>Viajes y traslados a domicilio — Rápido, económico y seguro</p>
+    </div>
+
+    <!--imagen -->
+    <div class="brand-image" id="imagenCargable">
+       <img src="img/Image 2026-04-29 at 7.18.43 PM.png" alt="MotoCargo" class="banner-image"   style="border-radius: 35%;" >
+    </div>
+
+    <div class="form-body">
+        <form id="formMotocarro">
+            <div class="two-columns">
+                <div class="column">
+                    <div class="input-group">
+                        <label>NOMBRE COMPLETO *</label>
+                        <input type="text" id="nombre" placeholder="Ej: Luis Fernando Torres" required>
+                    </div>
+                    <div class="input-group">
+                        <label>TELÉFONO / WHATSAPP *</label>
+                        <input type="tel" id="telefono" placeholder="+57 300 123 4567" required>
+                    </div>
+                    <div class="input-group">
+                        <label>DIRECCIÓN DE RECOGIDA *</label>
+                        <input type="text" id="direccionOrigen" placeholder="Calle, número, barrio, referencias" required>
+                    </div>
+                    <div class="input-group">
+                        <label>DIRECCIÓN DE ENTREGA *</label>
+                        <input type="text" id="direccionDestino" placeholder="Calle, número, destino final" required>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="input-group">
+                        <label>TIPO DE CARGA / MERCANCÍA</label>
+                        <select id="tipoCarga">
+                            <option value="paquete">📦 Paquete / Caja pequeña</option>
+                            <option value="comida">🍔 Comida / Pedidos restaurante</option>
+                            <option value="compras">🛍️ Compras supermercado</option>
+                            <option value="mudanza">🪑 Mudanza ligera (menos de 80kg)</option>
+                            <option value="documentos">📄 Documentos / Sobres</option>
+                            <option value="otro">📦 Otro tipo</option>
+                        </select>
+                    </div>
+                    <div class="row-doble">
+                        <div class="input-group">
+                            <label>PESO APROX. (kg) *</label>
+                            <input type="number" step="0.5" id="peso" placeholder="ej: 15 kg" required>
+                        </div>
+                        <div class="input-group">
+                            <label>URGENCIA DEL VIAJE</label>
+                            <select id="urgencia">
+                                <option value="normal">🕒 Normal (2-3 horas)</option>
+                                <option value="express">⚡ Express (1 hora)</option>
+                                <option value="inmediato">🔥 Inmediato (ahora mismo)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label>FECHA Y HORA DESEADA *</label>
+                        <input type="datetime-local" id="fechaHora" required>
+                    </div>
+                    <div class="input-group">
+                        <label>INSTRUCCIONES ADICIONALES</label>
+                        <textarea id="instrucciones" placeholder="Ej: Llamar al llegar, paquete frágil, código de acceso, etc..."></textarea>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <button type="submit" class="btn-submit">🛺 SOLICITAR TRASLADO AHORA</button>
+            <div class="footer-note">
+                * Un asesor se comunicará para confirmar tarifa y disponibilidad de motocarro en tu zona.
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="toastMsg" class="toast-message">✅ Viaje solicitado - Te contactaremos enseguida</div>
+
+<script>
+    (function() {
+        const form = document.getElementById('formMotocarro');
+        const toast = document.getElementById('toastMsg');
+
+        function showMessage(msg, isError = false) {
+            toast.textContent = msg || (isError ? '❌ Error, verifica los datos' : '✅ ¡Solicitud enviada! Un motorista se asignará pronto.');
+            if(isError) {
+                toast.style.backgroundColor = '#b71c1c';
+            } else {
+                toast.style.backgroundColor = '#2e7d32';  
+            }
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+                toast.style.backgroundColor = '#c62828';
+            }, 3800);
+        }
+
+       
+        function isValidFutureDateTime(dateTimeString) {
+            const selectedDateTime = new Date(dateTimeString);
+            const now = new Date();
+            return selectedDateTime > now;
+        }
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const nombre = document.getElementById('nombre').value.trim();
+            const telefono = document.getElementById('telefono').value.trim();
+            const origen = document.getElementById('direccionOrigen').value.trim();
+            const destino = document.getElementById('direccionDestino').value.trim();
+            const peso = document.getElementById('peso').value;
+            const fechaHora = document.getElementById('fechaHora').value;
+
+            // validaciones
+            if(!nombre || !telefono || !origen || !destino || !peso || !fechaHora) {
+                showMessage('⚠️ Por favor completa todos los campos obligatorios (*)', true);
+                return;
+            }
+
+            if(isNaN(parseFloat(peso)) || parseFloat(peso) <= 0) {
+                showMessage('⚖️ Ingresa un peso válido mayor a 0 kg', true);
+                return;
+            }
+
+            if(parseFloat(peso) > 200) {
+                showMessage('🛺 El peso máximo para motocarro es de 200 kg. Para cargas mayores contacta servicio especial.', true);
+                return;
+            }
+
+            if(telefono.length < 8) {
+                showMessage('📞 Número de teléfono inválido, verifica los dígitos', true);
+                return;
+            }
+
+            if (!isValidFutureDateTime(fechaHora)) {
+                showMessage('⏰ La fecha y hora debe ser posterior al momento actual', true);
+                return;
+            }
+
+            // recolectar datos
+            const tipoCarga = document.getElementById('tipoCarga').value;
+            let tipoCargaTexto = document.querySelector('#tipoCarga option:checked')?.innerText || tipoCarga;
+            const urgencia = document.getElementById('urgencia').value;
+            const instrucciones = document.getElementById('instrucciones').value;
+
+            const solicitud = {
+                nombre,
+                telefono,
+                direccionRecogida: origen,
+                direccionEntrega: destino,
+                pesoKg: parseFloat(peso),
+                tipoCarga: tipoCargaTexto,
+                urgencia,
+                fechaHoraSolicitada: fechaHora,
+                instrucciones: instrucciones || 'Ninguna',
+                fechaRegistro: new Date().toISOString()
+            };
+
+            console.log('Solicitud de traslado en motocarro:', solicitud);
+            
+     
+            let mensajeExito = `🛺 ¡Gracias ${nombre}! Tu viaje en motocarro ha sido registrado. Nos pondremos en contacto en menos de 10 minutos para coordinar el servicio ${urgencia}.`;
+            showMessage(mensajeExito, false);
+            
+  
+        });
+
+   
+        const imgElement = document.getElementById('miImagenDinamica');
+        const brandDiv = document.querySelector('.brand-image');
+        
+        const fileInput = document.createElement('input');
+        fileInput.type = 'file';
+        fileInput.accept = 'image/*';
+        fileInput.style.display = 'none';
+        document.body.appendChild(fileInput);
+        
+        brandDiv.style.cursor = 'pointer';
+        brandDiv.title = 'Haz clic para subir tu imagen (motocarro, fondo rojo)';
+        
+        brandDiv.addEventListener('click', (e) => {
+            e.stopPropagation();
+            fileInput.click();
+        });
+        
+        fileInput.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            if (file && file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = function(ev) {
+                    imgElement.src = ev.target.result;
+                    const infoP = brandDiv.querySelector('p');
+                    if(infoP) {
+                        infoP.style.color = '#1b5e20';
+                        infoP.innerHTML = '✅ Imagen de motocarro cargada correctamente';
+                    }
+                    showMessage('🖼️ Imagen personalizada actualizada (tonos rojos compatibles)', false);
+                    setTimeout(() => {
+                        if(infoP) infoP.innerHTML = '▲ Haz clic para cambiar imagen (fondo rojo)';
+                        if(infoP) infoP.style.color = '#c62828';
+                    }, 4000);
+                };
+                reader.readAsDataURL(file);
+            } else {
+                showMessage('❌ Selecciona una imagen válida (JPG, PNG, SVG)', true);
+            }
+        });
+    })();
+</script>
+</body>
+</html>gbvh                       

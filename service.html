@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Registro de Técnicos a Domicilio - Profex</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(145deg, #0a5f8a 0%, #0a4c6e 100%);
+            /* Fondo azul profundo como base */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+
+        .register-container {
+            max-width: 1000px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 36px;
+            overflow: hidden;
+            box-shadow: 0 30px 40px rgba(0, 0, 0, 0.25), 0 8px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.2s ease;
+        }
+
+    
+        .form-header {
+            background: #eef6fc;
+            padding: 28px 32px 20px 32px;
+            border-bottom: 3px solid #1e88e5;
+            text-align: center;
+        }
+
+        .form-header h1 {
+            font-size: 1.9rem;
+            color: #0a5f8a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+        }
+
+        .form-header h1 i {
+            font-size: 2rem;
+        }
+
+        .form-header p {
+            color: #2c6e9e;
+            margin-top: 8px;
+            font-weight: 500;
+            font-size: 1rem;
+        }
+
+        .brand-image {
+            background: #e3f2fd;
+            text-align: center;
+            padding: 16px 20px 10px 20px;
+        }
+
+        .brand-image img {
+            max-width: 130px;
+            height: auto;
+            border-radius: 20px;
+            filter: drop-shadow(0 6px 12px rgba(0,0,0,0.1));
+        }
+
+  
+        .form-body {
+            padding: 28px 32px 38px 32px;
+            background: white;
+        }
+
+        .two-columns {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 24px;
+        }
+
+        .column {
+            flex: 1;
+            min-width: 220px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-group label {
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+            color: #1e6f9f;
+        }
+
+        .input-group input, 
+        .input-group select,
+        .input-group textarea {
+            padding: 12px 14px;
+            border: 1.5px solid #cde5f5;
+            border-radius: 20px;
+            font-size: 0.95rem;
+            transition: 0.2s;
+            background: #fefefe;
+            outline: none;
+        }
+
+        .input-group input:focus,
+        .input-group select:focus,
+        .input-group textarea:focus {
+            border-color: #42a5f5;
+            box-shadow: 0 0 0 3px rgba(66, 165, 245, 0.2);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 70px;
+        }
+
+        .row-doble {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .row-doble .input-group {
+            flex: 1;
+        }
+
+        hr {
+            margin: 20px 0 24px;
+            border: none;
+            height: 2px;
+            background: linear-gradient(to right, #cce6f5, #42a5f5, #cce6f5);
+        }
+
+        .btn-submit {
+            width: 100%;
+            background: #1e88e5;
+            border: none;
+            padding: 15px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: white;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: all 0.25s;
+            box-shadow: 0 5px 0 #0d4670;
+            margin-top: 10px;
+            letter-spacing: 1px;
+        }
+
+        .btn-submit:hover {
+            background: #42a5f5;
+            transform: translateY(-2px);
+            box-shadow: 0 7px 0 #0d4670;
+        }
+
+        .btn-submit:active {
+            transform: translateY(3px);
+            box-shadow: 0 2px 0 #0d4670;
+        }
+
+        .footer-note {
+            text-align: center;
+            font-size: 0.75rem;
+            color: #2c6e9e;
+            margin-top: 24px;
+            border-top: 1px solid #cde5f5;
+            padding-top: 18px;
+        }
+
+        @media (max-width: 680px) {
+            .form-header h1 {
+                font-size: 1.4rem;
+            }
+            .form-body {
+                padding: 20px;
+            }
+            .two-columns {
+                gap: 12px;
+            }
+        }
+
+      
+        .toast-message {
+            visibility: hidden;
+            min-width: 260px;
+            background-color: #1565c0;
+            color: white;
+            text-align: center;
+            border-radius: 40px;
+            padding: 12px;
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            z-index: 1000;
+            transition: visibility 0s, opacity 0.3s;
+            opacity: 0;
+        }
+        .toast-message.show {
+            visibility: visible;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+
+<div class="register-container">
+    <div class="form-header">
+        <h1>
+            <span>🔧</span> Registrar Técnico / Profesional <span>🛠️</span>
+        </h1>
+        <p>Solicita servicio especializado a domicilio en minutos</p>
+    </div>
+
+ 
+    <div class="brand-image" id="imagenCargable">
+   <img src="img/WhatsApp Image 2026-05-06 at 11.20.03 PM (1).jpeg" alt="MotoCargo" class="banner-image"   style="border-radius: 35%;" >
+    </div>
+
+    <div class="form-body">
+        <form id="formTecnico">
+            <div class="two-columns">
+                <div class="column">
+                    <div class="input-group">
+                        <label>NOMBRE COMPLETO *</label>
+                        <input type="text" id="nombre" placeholder="Ej: Carlos Méndez" required>
+                    </div>
+                    <div class="input-group">
+                        <label>TELÉFONO / CELULAR *</label>
+                        <input type="tel" id="telefono" placeholder="+52 55 1234 5678" required>
+                    </div>
+                    <div class="input-group">
+                        <label>DIRECCIÓN DEL SERVICIO *</label>
+                        <input type="text" id="direccionServicio" placeholder="Calle, número, colonia" required>
+                    </div>
+                    <div class="input-group">
+                        <label>FECHA PREFERIDA *</label>
+                        <input type="date" id="fechaPreferida" required>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="input-group">
+                        <label>ESPECIALIDAD / OFICIO *</label>
+                        <select id="especialidad" required>
+                            <option value="">Seleccionar especialidad</option>
+                            <option value="electricidad">⚡ Electricidad / Instalaciones</option>
+                            <option value="plomeria">🚰 Plomería / Fontanería</option>
+                            <option value="electronica">📱 Electrónica / Rep. dispositivos</option>
+                            <option value="reparacion_hogar">🔨 Reparaciones generales hogar</option>
+                            <option value="aire_acondicionado">❄️ Aire acondicionado / Climatización</option>
+                            <option value="informatica">💻 Informática / Redes / Soporte TI</option>
+                            <option value="construccion">🏗️ Construcción / Albañilería</option>
+                            <option value="otro">🛠️ Otro (especificar)</option>
+                        </select>
+                    </div>
+                    <div class="input-group" id="otroCampoContainer" style="display: none;">
+                        <label>Especificar otra especialidad</label>
+                        <input type="text" id="otroEspecialidad" placeholder="Ej: Carpintería, soldadura...">
+                    </div>
+                    <div class="row-doble">
+                        <div class="input-group">
+                            <label>URGENCIA</label>
+                            <select id="urgencia">
+                                <option value="normal">🕒 Normal (48-72h)</option>
+                                <option value="pronto">⚡ Pronto (24h)</option>
+                                <option value="inmediato">🚨 Inmediato (hoy / 4h)</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label>PRESUPUESTO ESTIMADO</label>
+                            <select id="presupuesto">
+                                <option value="sin_definir">Sin definir / A convenir</option>
+                                <option value="basico">$ - Económico</option>
+                                <option value="medio">$$ - Estándar</option>
+                                <option value="alto">$$$ - Premium / Urgente</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label>DESCRIPCIÓN DEL TRABAJO *</label>
+                        <textarea id="descripcion" placeholder="Describe detalladamente la avería o servicio que necesitas..." required></textarea>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <button type="submit" class="btn-submit">🔍 CONTACTAR TÉCNICO AHORA</button>
+            <div class="footer-note">
+                * Al enviar, nos pondremos en contacto contigo para confirmar disponibilidad y presupuesto sin compromiso.
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="toastMsg" class="toast-message">✅ Solicitud enviada - Te contactaremos pronto</div>
+
+<script>
+    (function() {
+        const form = document.getElementById('formTecnico');
+        const toast = document.getElementById('toastMsg');
+        const especialidadSelect = document.getElementById('especialidad');
+        const otroContainer = document.getElementById('otroCampoContainer');
+        const otroInput = document.getElementById('otroEspecialidad');
+
+        // Mostrar campo "otro" si selecciona esa opción
+        especialidadSelect.addEventListener('change', function() {
+            if (this.value === 'otro') {
+                otroContainer.style.display = 'block';
+                otroInput.setAttribute('required', 'required');
+            } else {
+                otroContainer.style.display = 'none';
+                otroInput.removeAttribute('required');
+                otroInput.value = '';
+            }
+        });
+
+        function showMessage(msg, isError = false) {
+            toast.textContent = msg || (isError ? '❌ Error, verifica los datos' : '✅ Solicitud enviada - Te contactaremos pronto');
+            if(isError) {
+                toast.style.backgroundColor = '#c62828';
+            } else {
+                toast.style.backgroundColor = '#1565c0';
+            }
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+                toast.style.backgroundColor = '#1565c0';
+            }, 3500);
+        }
+
+      
+        function isValidFutureDate(dateString) {
+            const selectedDate = new Date(dateString);
+            const today = new Date();
+            today.setHours(0,0,0,0);
+            return selectedDate >= today;
+        }
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const nombre = document.getElementById('nombre').value.trim();
+            const telefono = document.getElementById('telefono').value.trim();
+            const direccion = document.getElementById('direccionServicio').value.trim();
+            const fecha = document.getElementById('fechaPreferida').value;
+            const especialidad = especialidadSelect.value;
+            const descripcion = document.getElementById('descripcion').value.trim();
+            let especialidadFinal = especialidad;
+
+            if(!nombre || !telefono || !direccion || !fecha || !especialidad || !descripcion) {
+                showMessage('⚠️ Todos los campos marcados con * son obligatorios', true);
+                return;
+            }
+
+            if (especialidad === 'otro') {
+                const otroTexto = otroInput.value.trim();
+                if (!otroTexto) {
+                    showMessage('✏️ Por favor especifica la especialidad en el campo "Otro"', true);
+                    return;
+                }
+                especialidadFinal = otroTexto;
+            }
+
+            if (!isValidFutureDate(fecha)) {
+                showMessage('📅 La fecha debe ser igual o posterior al día de hoy', true);
+                return;
+            }
+
+            if (telefono.length < 7) {
+                showMessage('📞 El número de teléfono parece incompleto, verifica', true);
+                return;
+            }
+
+            if (descripcion.split(/\s+/).filter(w => w.length > 0).length < 4) {
+                showMessage('📝 Por favor describe con más detalle el trabajo a realizar (mínimo 4 palabras)', true);
+                return;
+            }
+
+         
+            const datosRegistro = {
+                nombre,
+                telefono,
+                direccionServicio: direccion,
+                fechaPreferida: fecha,
+                especialidad: especialidadFinal,
+                urgencia: document.getElementById('urgencia').value,
+                presupuesto: document.getElementById('presupuesto').value,
+                descripcionTrabajo: descripcion,
+                fechaRegistro: new Date().toISOString()
+            };
+            console.log('Solicitud de técnico a domicilio:', datosRegistro);
+            
+            showMessage(`🔧 ¡Gracias ${nombre}! Hemos recibido tu solicitud de ${especialidadFinal}. Un asesor te contactará en breve.`, false);
+            
+         
+        });
+
+       
+        const imgElement = document.getElementById('miImagenDinamica');
+        const brandDiv = document.querySelector('.brand-image');
+        
+        const fileInput = document.createElement('input');
+        fileInput.type = 'file';
+        fileInput.accept = 'image/*';
+        fileInput.style.display = 'none';
+        document.body.appendChild(fileInput);
+        
+        brandDiv.style.cursor = 'pointer';
+        brandDiv.title = 'Haz clic para cargar tu imagen (fondo azul/mismos colores)';
+        
+        brandDiv.addEventListener('click', (e) => {
+            e.stopPropagation();
+            fileInput.click();
+        });
+        
+        fileInput.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            if (file && file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = function(ev) {
+                    imgElement.src = ev.target.result;
+                    const infoP = brandDiv.querySelector('p');
+                    if(infoP) {
+                        infoP.style.color = '#0b5e7e';
+                        infoP.innerHTML = '✅ Imagen técnica personalizada agregada';
+                    }
+                    showMessage('Imagen actualizada exitosamente (fondo azul compatible)', false);
+                    setTimeout(() => {
+                        if(infoP) infoP.innerHTML = '▲ Haz clic para cambiar la imagen (fondo azul)';
+                        if(infoP) infoP.style.color = '#1565c0';
+                    }, 4000);
+                };
+                reader.readAsDataURL(file);
+            } else {
+                showMessage(' Selecciona un archivo de imagen válido (JPG, PNG, SVG)', true);
+            }
+        });
+    })();
+</script>
+</body>
+</html>

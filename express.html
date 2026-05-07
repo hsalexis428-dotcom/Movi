@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Registro de Envíos - TuLogística</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(145deg, #f87a1f 0%, #e35f12 100%);
+        
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+    
+        .register-container {
+            max-width: 950px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 36px;
+            overflow: hidden;
+            box-shadow: 0 30px 40px rgba(0, 0, 0, 0.25), 0 8px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.2s ease;
+        }
+
+      
+        .form-header {
+            background: #fff5ea;
+            padding: 28px 32px 20px 32px;
+            border-bottom: 3px solid #ff8c2e;
+            text-align: center;
+        }
+
+        .form-header h1 {
+            font-size: 1.9rem;
+            color: #cc5500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+        }
+
+        .form-header h1 i {
+            font-size: 2rem;
+        }
+
+        .form-header p {
+            color: #b45a1c;
+            margin-top: 8px;
+            font-weight: 500;
+            font-size: 1rem;
+        }
+
+        .brand-image {
+            background: #fef1e4;
+            text-align: center;
+            padding: 16px 20px 10px 20px;
+        }
+
+        .brand-image img {
+            max-width: 130px;
+            height: auto;
+            border-radius: 20px;
+            filter: drop-shadow(0 6px 12px rgba(0,0,0,0.1));
+        }
+
+      
+        .form-body {
+            padding: 28px 32px 38px 32px;
+            background: white;
+        }
+
+        .two-columns {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 24px;
+        }
+
+        .column {
+            flex: 1;
+            min-width: 220px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-group label {
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+            color: #e35f12;
+        }
+
+        .input-group input, 
+        .input-group select,
+        .input-group textarea {
+            padding: 12px 14px;
+            border: 1.5px solid #ffe0cc;
+            border-radius: 20px;
+            font-size: 0.95rem;
+            transition: 0.2s;
+            background: #fffdf9;
+            outline: none;
+        }
+
+        .input-group input:focus,
+        .input-group select:focus,
+        .input-group textarea:focus {
+            border-color: #f57c1e;
+            box-shadow: 0 0 0 3px rgba(245, 124, 30, 0.2);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 70px;
+        }
+
+      
+        .row-doble {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .row-doble .input-group {
+            flex: 1;
+        }
+
+        hr {
+            margin: 20px 0 24px;
+            border: none;
+            height: 2px;
+            background: linear-gradient(to right, #ffd6b3, #ff9a4a, #ffd6b3);
+        }
+
+        .btn-submit {
+            width: 100%;
+            background: #ff7a24;
+            border: none;
+            padding: 15px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: white;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: all 0.25s;
+            box-shadow: 0 5px 0 #b23c0a;
+            margin-top: 10px;
+            letter-spacing: 1px;
+        }
+
+        .btn-submit:hover {
+            background: #ff8c3e;
+            transform: translateY(-2px);
+            box-shadow: 0 7px 0 #b23c0a;
+        }
+
+        .btn-submit:active {
+            transform: translateY(3px);
+            box-shadow: 0 2px 0 #b23c0a;
+        }
+
+        .footer-note {
+            text-align: center;
+            font-size: 0.75rem;
+            color: #c2713a;
+            margin-top: 24px;
+            border-top: 1px solid #ffe0cc;
+            padding-top: 18px;
+        }
+
+        @media (max-width: 680px) {
+            .form-header h1 {
+                font-size: 1.4rem;
+            }
+            .form-body {
+                padding: 20px;
+            }
+            .two-columns {
+                gap: 12px;
+            }
+        }
+
+       
+        .toast-message {
+            visibility: hidden;
+            min-width: 240px;
+            background-color: #2e7d32;
+            color: white;
+            text-align: center;
+            border-radius: 40px;
+            padding: 12px;
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            z-index: 1000;
+            transition: visibility 0s, opacity 0.3s;
+            opacity: 0;
+        }
+        .toast-message.show {
+            visibility: visible;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+
+<div class="register-container">
+    <div class="form-header">
+        <h1>
+            <span>📦</span> Registro de Envíos <span>🚚</span>
+        </h1>
+        <p>Completá los datos para gestionar tu paquete a domicilio</p>
+    </div>
+
+  
+    <div class="brand-image" id="imagenCargable">
+        <!-- Aquí la dejamos por ahora -->
+      <img src="img/WhatsApp Image 2026-05-06 at 11.20.03 PM.jpeg" alt="MotoCargo" class="banner-image"   style="border-radius: 35%;" >
+    </div>
+
+    <div class="form-body">
+        <form id="formEnvio">
+            <div class="two-columns">
+                <div class="column">
+                    <div class="input-group">
+                        <label>NOMBRE COMPLETO *</label>
+                        <input type="text" id="nombre" placeholder="Ej: Ana Rodríguez" required>
+                    </div>
+                    <div class="input-group">
+                        <label>TELÉFONO *</label>
+                        <input type="tel" id="telefono" placeholder="+56 9 1234 5678" required>
+                    </div>
+                    <div class="input-group">
+                        <label>DIRECCIÓN DE RECOGIDA *</label>
+                        <input type="text" id="direccionOrigen" placeholder="Calle, número, localidad" required>
+                    </div>
+                    <div class="input-group">
+                        <label>DIRECCIÓN DE ENTREGA *</label>
+                        <input type="text" id="direccionDestino" placeholder="Calle, número, referencia" required>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="input-group">
+                        <label>TIPO DE PAQUETE</label>
+                        <select id="tipoPaquete">
+                            <option value="caja">📦 Caja / Cartón</option>
+                            <option value="sobre">✉️ Sobre / Documentos</option>
+                            <option value="bolsa">🛍️ Bolsa / Embalaje flexible</option>
+                            <option value="otro">📦 Otro</option>
+                        </select>
+                    </div>
+                    <div class="row-doble">
+                        <div class="input-group">
+                            <label>PESO (kg) *</label>
+                            <input type="number" step="0.1" id="peso" placeholder="2.5" required>
+                        </div>
+                        <div class="input-group">
+                            <label>URGENCIA</label>
+                            <select id="urgencia">
+                                <option value="normal">🚚 Normal (2-3 días)</option>
+                                <option value="express">⚡ Express (24h)</option>
+                                <option value="same-day">🏍️ Same day (hoy)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label>OBSERVACIONES (opcional)</label>
+                        <textarea id="observaciones" placeholder="Fragil, código de acceso, etc..."></textarea>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <button type="submit" class="btn-submit">✈️ SOLICITAR ENVÍO ➕</button>
+            <div class="footer-note">
+                * Al enviar aceptas nuestros términos y políticas de entrega. Cotización será enviada al instante.
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="toastMsg" class="toast-message">✅ Registro exitoso - Revisaremos tu solicitud</div>
+
+<script>
+    (function() {
+        const form = document.getElementById('formEnvio');
+        const toast = document.getElementById('toastMsg');
+
+        function showMessage(msg, isError = false) {
+            toast.textContent = msg || (isError ? '❌ Error, revisa los campos' : '✅ Registro exitoso - Revisaremos tu solicitud');
+            if(isError) {
+                toast.style.backgroundColor = '#d32f2f';
+            } else {
+                toast.style.backgroundColor = '#2e7d32';
+            }
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+                
+                toast.style.backgroundColor = '#2e7d32';
+            }, 3000);
+        }
+
+       
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const nombre = document.getElementById('nombre').value.trim();
+            const telefono = document.getElementById('telefono').value.trim();
+            const origen = document.getElementById('direccionOrigen').value.trim();
+            const destino = document.getElementById('direccionDestino').value.trim();
+            const peso = document.getElementById('peso').value;
+
+            if(!nombre || !telefono || !origen || !destino || !peso) {
+                showMessage('⚠️ Por favor completa los campos obligatorios (Nombre, Teléfono, Direcciones y Peso)', true);
+                return;
+            }
+            if(isNaN(parseFloat(peso)) || parseFloat(peso) <= 0) {
+                showMessage('⚠️ Ingrese un peso válido mayor a 0', true);
+                return;
+            }
+            if(telefono.length < 7) {
+                showMessage('📞 El teléfono parece demasiado corto, verifica', true);
+                return;
+            }
+
+            // a mimir
+            const datosRegistro = {
+                nombre,
+                telefono,
+                direccionOrigen: origen,
+                direccionDestino: destino,
+                tipoPaquete: document.getElementById('tipoPaquete').value,
+                peso: parseFloat(peso),
+                urgencia: document.getElementById('urgencia').value,
+                observaciones: document.getElementById('observaciones').value,
+                fechaRegistro: new Date().toISOString()
+            };
+            console.log('Datos de envío registrados:', datosRegistro);
+            
+        
+            showMessage('📦 ¡Envío registrado! En breve te contactaremos con el costo y tracking.', false);
+            
+           
+        });
+
+    
+        
+        const imgElement = document.getElementById('miImagenDinamica');
+        const brandDiv = document.querySelector('.brand-image');
+        
+   
+        const fileInput = document.createElement('input');
+        fileInput.type = 'file';
+        fileInput.accept = 'image/*';
+        fileInput.style.display = 'none';
+        document.body.appendChild(fileInput);
+        
+        brandDiv.style.cursor = 'pointer';
+        brandDiv.title = 'Haz clic para subir tu imagen (mismos colores/fondo naranja)';
+        
+        brandDiv.addEventListener('click', (e) => {
+          
+            e.stopPropagation();
+            fileInput.click();
+        });
+        
+        fileInput.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            if (file && file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = function(ev) {
+                    imgElement.src = ev.target.result;
+              
+                    const infoP = brandDiv.querySelector('p');
+                    if(infoP) infoP.style.color = '#228B22';
+                    showMessage('🖼️ Imagen personalizada cargada con éxito (mismo estilo naranja)', false);
+                    setTimeout(() => {
+                        if(infoP) infoP.style.color = '#e06717';
+                    }, 2000);
+                };
+                reader.readAsDataURL(file);
+            } else {
+                showMessage('❌ Por favor selecciona un archivo de imagen válido', true);
+            }
+        });
+        
+      
+    })();
+</script>
+</body>
+</html>
